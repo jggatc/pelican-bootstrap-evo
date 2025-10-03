@@ -1,4 +1,4 @@
-#pelican-bootstrap-evo
+# pelican-bootstrap-evo
 
 A theme for [Pelican](https://github.com/getpelican/pelican) static site. The theme is derived from [pelican-bootstrap3](https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3), extending its features.
 
