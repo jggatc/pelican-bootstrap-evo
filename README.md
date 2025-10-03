@@ -39,6 +39,14 @@ site, make sure to also correctly specify the default language of the theme
 
 Otherwise the translations will not be used on your default site.
 
+## Extended Features
+
+This section describes extended features of pelican-bootstrap-evo. The other features are described below.
+
+### Navbar Sitename - SITESUBTITLE
+
+Set `SITENAME` to allow for `SITENAME - SITESUBTITLE` in navbar. The feature is determined by `SITENAME_WITH_SITESUBTITLE`. The separator can be set with `SITENAME_WITH_SITESUBTITLE_SEP`.
+
 ## Usage
 
 This theme honors the following standard Pelican settings:

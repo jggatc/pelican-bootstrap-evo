@@ -131,7 +131,15 @@
             {% endif %}
             <a href="{{ SITEURL }}/" class="navbar-brand">
                 {% if SITELOGO %}<img class="img-responsive pull-left gap-right" src="{{ SITEURL }}/{{ SITELOGO }}" width="{{ SITELOGO_SIZE }}"/> {% endif %}
-                {% if not HIDE_SITENAME %}{{ SITENAME }}{% endif %}
+                {% if not HIDE_SITENAME %}
+                    {% if not SITENAME_WITH_SITESUBTITLE %}
+                        {{ SITENAME }}
+                    {% elif not SITENAME_WITH_SITESUBTITLE_SEP %}
+                        {{ SITENAME }} - {{ SITESUBTITLE }}
+                    {% else %}
+                        {{ SITENAME }}{{ SITENAME_WITH_SITESUBTITLE_SEP }}{{ SITESUBTITLE }}
+                    {% endif %}
+                {% endif %}
             </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
