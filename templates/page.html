@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block head %}
     {{ super() }}
-<!--HTML code insertion in page <head>-->
+    <!--HTML code insertion in page <head>-->
+    {% if page.baseurl %}
+        <base href="{{ SITEURL }}/{{ page.baseurl }}">
+    {% endif %}
 {% endblock %}
 {% block title %}{{ page.title | striptags }} - {{ SITENAME }}{% endblock %}
 {% block html_lang %}{{ page.lang }}{% endblock %}
