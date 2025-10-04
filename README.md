@@ -63,6 +63,10 @@ Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`. The title can
 
 When `baseurl` metadata key is set in an article or page, a `<base>` tag with the `baseurl` is inserted in `<head>`. If set, the base URL will be the root for all relative URL. An instance where this functionality is of use is with a JavaScript app that loads assets from a relative URL of the app URL, that can be defined as `:baseurl: app/`.
 
+### Footer
+
+The footer can be defined with `FOOTER_COPYRIGHT`, `FOOTER_TEXT`, and `FOOTER_CONTENT`.
+
 ## Usage
 
 This theme honors the following standard Pelican settings:

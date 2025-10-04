@@ -4,6 +4,7 @@
 * add HTML base tag in `<head>` of article and page templates, defined by `baseurl` metadata key.
 * change `back to top` in footer to absolute url, required when `baseurl` base tag is used.
 * add `SIDEBAR_POSTS_HEADER` to define header of recent posts in sidebar.
-* add `DISPLAY_PAGES_ON_SIDEBAR` to display pages in sidebar.
+* add `DISPLAY_PAGES_ON_SIDEBAR`, `SIDEBAR_POSTS_HEADER`, and `SIDEBAR_PAGES` to display pages in sidebar.
 * add `SIDEBAR_ITEMS` for order of items in sidebar.
+* add `FOOTER_COPYRIGHT`, `FOOTER_TEXT`, and `FOOTER_CONTENT` to define footer.
 
