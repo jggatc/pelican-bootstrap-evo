@@ -1,5 +1,7 @@
 {% if DISPLAY_PAGES_ON_SIDEBAR %}
   {% from 'includes/sidebar/macros.jinja' import title %}
+  {% if SIDEBAR_PAGES_HEADER is not defined %}
+    {% set SIDEBAR_PAGES_HEADER = 'Pages' %}
   {% endif %}
 
 <!-- Sidebar/Pages -->
@@ -23,3 +25,4 @@
   </ul>
 </li>
 <!-- End Sidebar/Pages -->
+{% endif %}

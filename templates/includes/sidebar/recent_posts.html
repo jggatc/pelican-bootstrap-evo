@@ -3,6 +3,9 @@
   {% if RECENT_POST_COUNT is not defined %}
     {% set RECENT_POST_COUNT = 5 %}
   {% endif %}
+  {% if SIDEBAR_POSTS_HEADER is not defined %}
+    {% set SIDEBAR_POSTS_HEADER = 'Recent Posts' %}
+  {% endif %}
 
 <!-- Sidebar/Recent Posts -->
 <li class="list-group-item">
