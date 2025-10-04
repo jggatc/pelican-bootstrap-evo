@@ -5,3 +5,15 @@
     <i class="fa fa-{{ icon }} fa-lg"></i><span class="icon-label">{{ name }}</span>
   {%- endif -%}
 {%- endmacro %}
+
+{% macro find_page(pages_list, page_title) -%}
+    {% set found = none -%}
+    {% for page in pages_list -%}
+        {% if page.title == page_title -%}
+            {% if not found -%}
+                {% set found = page -%}
+            {% endif -%}
+        {% endif -%}
+    {%- endfor %}
+    {{ found }}
+{%- endmacro %}

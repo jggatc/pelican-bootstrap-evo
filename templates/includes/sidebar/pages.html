@@ -1,0 +1,19 @@
+{% if DISPLAY_PAGES_ON_SIDEBAR %}
+  {% from 'includes/sidebar/macros.jinja' import title, find_page %}
+  {% endif %}
+
+<!-- Sidebar/Pages -->
+<li class="list-group-item">
+  <h4>{{ title(_(SIDEBAR_PAGES_HEADER), DISABLE_SIDEBAR_TITLE_ICONS) }}</h4>
+  <ul class="list-group" id="pages">
+    {% for page_title in SIDEBAR_PAGES %}
+        {% set sidebar_page = find_page(pages, page_title) %}
+        {% if sidebar_page %}
+        <li class="list-group-item">
+          <a href="{{ SITEURL }}/{{ sidebar_page.url }}">{{ sidebar_page.title }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+  </ul>
+</li>
+<!-- End Sidebar/Pages -->

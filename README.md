@@ -49,11 +49,11 @@ Set `SITENAME` to allow for `SITENAME - SITESUBTITLE` in navbar. The feature is 
 
 ### Sidebar posts
 
-When recent posts are displayed in sidebar with `DISPLAY_RECENT_POSTS_ON_SIDEBAR`, the title can be defined with `SIDEBAR_POST_HEADER`.
+When recent posts are displayed in sidebar with `DISPLAY_RECENT_POSTS_ON_SIDEBAR`, the title can be defined with `SIDEBAR_POSTS_HEADER`.
 
 ### Sidebar pages
 
-Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`, the title can be defined with `SIDEBAR_PAGES_HEADER`.
+Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`. The title can be defined with `SIDEBAR_PAGES_HEADER`. To specify pages to include, set a list of page titles in `SIDEBAR_PAGES`.
 
 ### Base tag URL
 
