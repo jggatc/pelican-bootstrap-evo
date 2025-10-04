@@ -51,6 +51,10 @@ Set `SITENAME` to allow for `SITENAME - SITESUBTITLE` in navbar. The feature is 
 
 When recent posts are displayed in sidebar with `DISPLAY_RECENT_POSTS_ON_SIDEBAR`, the title can be defined with `SIDEBAR_POST_HEADER`.
 
+### Sidebar pages
+
+Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`, the title can be defined with `SIDEBAR_PAGES_HEADER`.
+
 ### Base tag URL
 
 When `baseurl` metadata key is set in an article or page, a `<base>` tag with the `baseurl` is inserted in `<head>`. If set, the base URL will be the root for all relative URL. An instance where this functionality is of use is with a JavaScript app that loads assets from a relative URL of the app URL, that can be defined as `:baseurl: app/`.
