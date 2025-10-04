@@ -55,6 +55,10 @@ When recent posts are displayed in sidebar with `DISPLAY_RECENT_POSTS_ON_SIDEBAR
 
 Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`. The title can be defined with `SIDEBAR_PAGES_HEADER`. To specify pages to include, set a list of page titles in `SIDEBAR_PAGES`.
 
+### Sidebar order
+
+`SIDEBAR_ITEMS` defines order of included items in sidebar. If not defined the order is ['social', 'pages', 'recent_posts', 'categories', 'tag_cloud', 'show_source', 'series', 'github', 'twitter_timeline', 'links', 'authors', 'images', 'archive'].
+
 ### Base tag URL
 
 When `baseurl` metadata key is set in an article or page, a `<base>` tag with the `baseurl` is inserted in `<head>`. If set, the base URL will be the root for all relative URL. An instance where this functionality is of use is with a JavaScript app that loads assets from a relative URL of the app URL, that can be defined as `:baseurl: app/`.

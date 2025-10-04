@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+{% if not SIDEBAR_ITEMS %}
 <section class="well well-sm">
   <ul class="list-group list-group-flush">
     {% include 'includes/sidebar/optional_top.html' ignore missing %}
@@ -18,4 +19,15 @@
     {% include 'includes/sidebar/optional_bottom.html' ignore missing %}
   </ul>
 </section>
+{% else %}
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+    {% include 'includes/sidebar/optional_top.html' ignore missing %}
+    {% for item in SIDEBAR_ITEMS %}
+        {% include 'includes/sidebar/' + item + '.html' %}
+    {% endfor %}
+    {% include 'includes/sidebar/optional_bottom.html' ignore missing %}
+  </ul>
+</section>
+{% endif %}
 <!-- End Sidebar -->

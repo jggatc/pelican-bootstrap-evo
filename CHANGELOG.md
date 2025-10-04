@@ -5,4 +5,5 @@
 * change `back to top` in footer to absolute url, required when `baseurl` base tag is used.
 * add `SIDEBAR_POSTS_HEADER` to define header of recent posts in sidebar.
 * add `DISPLAY_PAGES_ON_SIDEBAR` to display pages in sidebar.
+* add `SIDEBAR_ITEMS` for order of items in sidebar.
 
