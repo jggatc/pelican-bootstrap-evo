@@ -2,13 +2,14 @@
 {% if USE_OPEN_GRAPH is not defined %}
     {% set USE_OPEN_GRAPH = True %}
 {% endif %}
-<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock %}"{% if USE_OPEN_GRAPH %} prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml"{% endif %}>
+{% set BOOTSTRAP_DARK_THEMES = BOOTSTRAP_DARK_THEMES|default(['slate', 'cyborg', 'darkly', 'superhero']) %}
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock %}"{% if USE_OPEN_GRAPH %} prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml"{% endif %}{% if BOOTSTRAP_THEME_SWITCH %} data-theme-css-base="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css" data-theme-dark="{{ BOOTSTRAP_THEME_DARK|default(BOOTSTRAP_THEME)|default('slate') }}" data-theme-light="{{ BOOTSTRAP_THEME_LIGHT|default(BOOTSTRAP_THEME)|default('journal') }}" data-theme-dark-styles="{{ BOOTSTRAP_DARK_THEMES|join(' ') }}"{% endif %} data-bs-theme="{% if BOOTSTRAP_THEME in BOOTSTRAP_DARK_THEMES %}dark{% else %}light{% endif %}">
 <head>
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% if 'liquid_tags.notebook' in PLUGINS %}
         {% include 'includes/liquid_tags_nb_header.html' %}
@@ -58,18 +59,15 @@
         <meta name="flattr:id" content="{{ FLATTR_ID }}">
     {% endif %}
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap theme -->
     {% if BOOTSTRAP_THEME %}
-        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/bootstrap.{{ BOOTSTRAP_THEME }}.min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/{{ BOOTSTRAP_THEME }}/bootstrap.min.css" id="bootstrap-theme-css" type="text/css"/>
     {% else %}
-        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/bootstrap.min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/bootstrap.min.css" id="bootstrap-theme-css" type="text/css"/>
     {% endif %}
-    <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/icons/bootstrap-icons.min.css" rel="stylesheet">
 
     <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/pygments/{{ PYGMENTS_STYLE|default('native') }}.css" rel="stylesheet">
-    {% if 'tipue_search' in PLUGINS %}
-    <link href="{{ SITEURL}}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch.css" rel="stylesheet">
-    {% endif %}
     {% if DOCUTIL_CSS %}
         <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/html4css1.css" rel="stylesheet">
     {% endif %}
@@ -120,34 +118,27 @@
 </head>
 <body>
 
-<div class="navbar {% if BOOTSTRAP_NAVBAR_INVERSE %}navbar-inverse{% else %}navbar-default{% endif %} navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-expand-lg {% if BOOTSTRAP_NAVBAR_INVERSE %}navbar-dark bg-dark{% else %}navbar-dark bg-primary{% endif %} sticky-top" aria-label="Main navigation">
     <div class="container{% if BOOTSTRAP_FLUID %}-fluid{% endif %}">
-        <div class="navbar-header">
-            {% if MENUITEMS or (pages and DISPLAY_PAGES_ON_MENU) or (categories and DISPLAY_CATEGORIES_ON_MENU) %}
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            {% endif %}
-            <a href="{{ SITEURL }}/" class="navbar-brand">
-                {% if SITELOGO %}<img class="img-responsive pull-left gap-right" src="{{ SITEURL }}/{{ SITELOGO }}" width="{{ SITELOGO_SIZE }}"/> {% endif %}
-                {% if not HIDE_SITENAME %}
-                    {% if not SITENAME_WITH_SITESUBTITLE %}
-                        {{ SITENAME }}
-                    {% elif not SITENAME_WITH_SITESUBTITLE_SEP %}
-                        {{ SITENAME }} - {{ SITESUBTITLE }}
-                    {% else %}
-                        {{ SITENAME }}{{ SITENAME_WITH_SITESUBTITLE_SEP }}{{ SITESUBTITLE }}
-                    {% endif %}
+        <a href="{{ SITEURL }}/" class="navbar-brand">
+            {% if SITELOGO %}<img class="d-inline-block align-text-top gap-right" src="{{ SITEURL }}/{{ SITELOGO }}" width="{{ SITELOGO_SIZE }}" alt=""/> {% endif %}
+            {% if not HIDE_SITENAME %}
+                {% if not SITENAME_WITH_SITESUBTITLE %}
+                    {{ SITENAME }}
+                {% elif not SITENAME_WITH_SITESUBTITLE_SEP %}
+                    {{ SITENAME }} - {{ SITESUBTITLE }}
+                {% else %}
+                    {{ SITENAME }}{{ SITENAME_WITH_SITESUBTITLE_SEP }}{{ SITESUBTITLE }}
                 {% endif %}
-            </a>
-        </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
+            {% endif %}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="{{ _('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <ul class="navbar-nav me-auto">
                 {% for title, link in MENUITEMS %}
-                    <li><a href="{{ link }}">{{ title }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ link }}">{{ title }}</a></li>
                 {% endfor %}
                 {% if not PAGES_SORT_ATTRIBUTE -%}
                     {% set PAGES_SORT_ATTRIBUTE = 'title' %}
@@ -155,7 +146,7 @@
                 {% if DISPLAY_PAGES_ON_MENU %}
                     {% for p in pages | sort(attribute=PAGES_SORT_ATTRIBUTE) %}
                         {% if p.url %}
-                         <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">
+                         <li class="nav-item"><a class="nav-link{% if p == page %} active{% endif %}" href="{{ SITEURL }}/{{ p.url }}">
                              {{ p.menulabel|default(p.title) }}
                           </a></li>
                         {% endif %}
@@ -163,28 +154,23 @@
                 {% endif %}
                 {% if DISPLAY_CATEGORIES_ON_MENU %}
                     {% for cat, null in categories %}
-                        <li {% if cat == category %}class="active"{% endif %}>
-                            <a href="{{ SITEURL }}/{{ cat.url }}">{{ cat | capitalize }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link{% if cat == category %} active{% endif %}" href="{{ SITEURL }}/{{ cat.url }}">{{ cat | capitalize }}</a>
                         </li>
                     {% endfor %}
                 {% endif %}
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-            {% if 'tipue_search' in PLUGINS %}
-              <li><span>
-                <form class="navbar-search" action="{{ SEARCH_URL | default('/search.html') }}">
-                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
-                </form></span>
-              </li>
-            {% endif %}
-            {% if ARCHIVES_SAVE_AS %}
-              <li><a href="{{ SITEURL }}/{{ ARCHIVES_URL | default('archives.html') }}"><i class="fa fa-th-list"></i><span class="icon-label">{{ _('Archives') }}</span></a></li>
-            {% endif %}
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                {% if ARCHIVES_SAVE_AS %}
+                  <li class="nav-item"><a class="nav-link" href="{{ SITEURL }}/{{ ARCHIVES_URL | default('archives.html') }}"><i class="bi bi-list-ul"></i><span class="icon-label">{{ _('Archives') }}</span></a></li>
+                {% endif %}
+                {% if BOOTSTRAP_THEME_SWITCH and BOOTSTRAP_THEME_SWITCH != 'footer' %}
+                  <li class="nav-item">{% include 'includes/theme_switch.html' %}</li>
+                {% endif %}
             </ul>
         </div>
-        <!-- /.navbar-collapse -->
     </div>
-</div> <!-- /.navbar -->
+</nav>
 
 <!-- Banner -->
 {% if BANNER and BANNER_ALL_PAGES %}
@@ -196,12 +182,14 @@
 
 <!-- Content Container -->
 {% if PADDED_SINGLE_COLUMN_STYLE %}
-    {% set content_class='col-md-8 col-md-offset-2' %}
+    {% set content_class='col-md-8 mx-auto' %}
+    {% set sidebar_class='' %}
 {% elif not HIDE_SIDEBAR or ABOUT_ME or AVATAR %}
-    {% set content_class='col-sm-9' + (' col-sm-push-3' if SIDEBAR_ON_LEFT else '') %}
-    {% set sidebar_class='col-sm-3' + (' col-sm-pull-9' if SIDEBAR_ON_LEFT else '') %}
+    {% set content_class='col-md-9' + (' order-md-last' if SIDEBAR_ON_LEFT else '') %}
+    {% set sidebar_class='col-md-3' + (' order-md-first' if SIDEBAR_ON_LEFT else '') %}
 {% else %}
-    {% set content_class='col-lg-12' %}
+    {% set content_class='col-12' %}
+    {% set sidebar_class='' %}
 {% endif %}
 <div class="container{% if BOOTSTRAP_FLUID %}-fluid{% endif %}">
     <div class="row">
@@ -230,18 +218,16 @@
 <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/bootstrap.min.js"></script>
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/bootstrap.bundle.min.js"></script>
 
-<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/respond.min.js"></script>
+{% if BOOTSTRAP_THEME_SWITCH %}
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/theme.js"></script>
+{% endif %}
 
 {% if CUSTOM_JS %}
     <script src="{{ SITEURL }}/{{ CUSTOM_JS }}"></script>
 {% endif %}
 
-{% if BANNER %}
-    <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/bodypadding.js"></script>
-{% endif %}
 {% include 'includes/sidebar/github-js.html' %}
 {% include 'includes/disqus_script.html' %}
 {% include 'includes/piwik.html' %}

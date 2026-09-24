@@ -5,15 +5,17 @@
 {% block breadcrumbs %}
     {% if DISPLAY_BREADCRUMBS %}
         <ol class="breadcrumb">
-            <li><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="fa fa-home fa-lg"></i></a></li>
-            <li class="active">{{ _('Authors') }}</li>
+            <li class="breadcrumb-item"><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="bi bi-house"></i></a></li>
+            <li class="breadcrumb-item active">{{ _('Authors') }}</li>
         </ol>
     {% endif %}
 {% endblock %}
 
 {% block content %}
   <h1>{{ _('Authors on') }} {{ SITENAME }}</h1>
+  <ul class="list-unstyled">
     {% for author, articles in authors|sort %}
         <li><a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a> ({{ articles|count }})</li>
     {% endfor %}
+  </ul>
 {% endblock %}

@@ -1,9 +1,17 @@
-body {
-    padding-top: 70px;
+/* Keep anchors from hiding under the sticky navbar when jumping to a fragment. */
+html {
+    scroll-padding-top: 72px;
 }
 
 #sidebar .list-group, #sidebar .list-group-item {
     background-color: transparent;
+}
+
+/* Sidebar is wrapped in a card (Bootstrap 5); blend it with the page
+   background and let the list-group provide the structure. */
+#sidebar .card {
+    background-color: transparent;
+    border: 0;
 }
 
 /* for list-groups nested within a list-group-item, reset the bottom margin */
@@ -12,7 +20,7 @@ body {
 }
 
 /* for list-group-items nested within a list-group-item, reset the bottom
-   padding of the last item, b/c the containing item has paddimg already
+   padding of the last item, b/c the containing item has padding already
  */
 .list-group-item .list-group-item:last-child {
     padding-bottom: 0px;
@@ -150,17 +158,6 @@ figure.floatcenter, .align-center {
     margin-left: 0;
 }
 
-.docutils.footnote td.label {
-    display: table-cell;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    color: inherit;
-    text-align: inherit;
-    white-space: inherit;
-    border-radius: inherit;
-}
-
 .categories-timestamp {
     color: #AAAAAA;
     font-size: 0.9em;
@@ -220,16 +217,6 @@ figure.floatcenter, .align-center {
     #banner .intro{
         font-size: 16px;
     }
-}
-
-:target:before {
-  content:"";
-  display:block;
-  height:50px;
-  /* fixed header height*/
-
-  margin:-50px 0 0;
-  /* negative fixed header height */
 }
 
 .gap-right {

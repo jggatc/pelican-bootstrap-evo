@@ -1,9 +1,10 @@
 {% if GITHUB_USER %}
   {% from 'includes/sidebar/macros.jinja' import title %}
+  {% set SIDEBAR_ICONS = not DISABLE_SIDEBAR_TITLE_ICONS %}
 
 <!-- Sidebar/Github -->
 <li class="list-group-item">
-  <h4>{{ title('GitHub Repos', DISABLE_SIDEBAR_TITLE_ICONS, icon='github') }}</h4>
+  <h4>{{ title('GitHub Repos', not SIDEBAR_ICONS, icon='github') }}</h4>
   <div id="gh_repos">
     <p class="list-group-item">Status updating...</p>
   </div>

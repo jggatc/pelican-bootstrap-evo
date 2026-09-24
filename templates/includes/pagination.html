@@ -1,36 +1,36 @@
 {% if articles_page and articles_paginator.num_pages > 1 %}
     {% if USE_PAGER %}
-        <ul class="pager">
+        <div class="d-flex justify-content-between">
             {% if articles_page.has_previous() %}
-                <li class="previous"><a href="{{ SITEURL }}/{{ articles_previous_page.url }}">&larr; {{ _('Newer') }}</a></li>
+                <a class="btn btn-secondary" href="{{ SITEURL }}/{{ articles_previous_page.url }}">&larr; {{ _('Newer') }}</a>
             {% else %}
-                <li class="previous disabled"><a href="#">&larr; {{ _('Newer') }}</a></li>
+                <span class="btn btn-secondary disabled">&larr; {{ _('Newer') }}</span>
             {% endif %}
             {% if articles_page.has_next() %}
-                <li class="next"><a
-                        href="{{ SITEURL }}/{{ articles_next_page.url }}">{{ _('Older') }} &rarr;</a></li>
+                <a class="btn btn-secondary"
+                        href="{{ SITEURL }}/{{ articles_next_page.url }}">{{ _('Older') }} &rarr;</a>
             {% else %}
-                <li class="next disabled"><a href="#">{{ _('Older') }} &rarr;</a></li>
+                <span class="btn btn-secondary disabled">{{ _('Older') }} &rarr;</span>
             {% endif %}
-        </ul>
+        </div>
     {% else %}
         <ul class="pagination">
             {% if articles_page.has_previous() %}
                 {% set num = articles_page.previous_page_number() %}
-                <li class="prev"><a href="{{ SITEURL }}/{{ articles_previous_page.url }}">&laquo;</a>
+                <li class="page-item"><a class="page-link" href="{{ SITEURL }}/{{ articles_previous_page.url }}">&laquo;</a>
                 </li>
             {% else %}
-                <li class="prev disabled"><a href="#">&laquo;</a></li>
+                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
             {% endif %}
             {% for num in range( 1, 1 + articles_paginator.num_pages ) %}
-                    <li class="{{ 'active' if num == articles_page.number else '' }}"><a
+                    <li class="page-item {{ 'active' if num == articles_page.number else '' }}"><a class="page-link"
                             href="{{ SITEURL }}/{{ articles_paginator.page(num).url if num > 1 else articles_paginator.page(1).url }}">{{ num }}</a></li>
                 {% endfor %}
             {% if articles_page.has_next() %}
-                <li class="next"><a
+                <li class="page-item"><a class="page-link"
                         href="{{ SITEURL }}/{{ articles_next_page.url }}">&raquo;</a></li>
             {% else %}
-                <li class="next disabled"><a href="#">&raquo;</a></li>
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
             {% endif %}
         </ul>
     {% endif %}

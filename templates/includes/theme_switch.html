@@ -1,0 +1,25 @@
+{# Theme switcher controls. Rendered only when BOOTSTRAP_THEME_SWITCH is set.
+   Set THEME_SWITCH_BTN_STYLE before including to match the surrounding
+   background (e.g. 'btn-outline-light' in the navbar, 'btn-outline-secondary' in the footer). #}
+<div class="d-flex align-items-center gap-2 flex-wrap">
+  <div class="btn-group btn-group-sm" role="group" aria-label="{{ _('Theme') }}">
+    <button type="button" class="btn {{ THEME_SWITCH_BTN_STYLE|default('btn-outline-secondary') }}" data-theme-mode="dark" title="{{ _('Dark theme') }}" aria-label="{{ _('Dark theme') }}">
+      <i class="bi bi-moon-stars" aria-hidden="true"></i> {{ _('Dark') }}
+    </button>
+    <button type="button" class="btn {{ THEME_SWITCH_BTN_STYLE|default('btn-outline-secondary') }}" data-theme-mode="light" title="{{ _('Light theme') }}" aria-label="{{ _('Light theme') }}">
+      <i class="bi bi-sun" aria-hidden="true"></i> {{ _('Light') }}
+    </button>
+  </div>
+  {% if BOOTSTRAP_THEME_STYLES %}
+  <div class="dropdown">
+    <button class="btn btn-sm {{ THEME_SWITCH_BTN_STYLE|default('btn-outline-secondary') }} dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-palette" aria-hidden="true"></i> <span id="theme-style-label">{{ BOOTSTRAP_THEME|default('bootstrap') }}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      {% for style in BOOTSTRAP_THEME_STYLES %}
+      <li><button class="dropdown-item" type="button" data-theme-style="{{ style }}">{{ style }}</button></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>

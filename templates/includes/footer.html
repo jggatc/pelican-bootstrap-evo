@@ -11,7 +11,7 @@
          {% else %}
             {% set copy_date = '' %}
          {% endif %}
-         <div class="col-xs-10">
+         <div class="col-10 col-sm-11">
            {% if FOOTER_COPYRIGHT is defined %}
              {{ FOOTER_COPYRIGHT }}
            {% else %}
@@ -49,7 +49,15 @@
          {% else %}
              {% set abs_url = SITEURL %}
          {% endif %}
-         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="{{ abs_url }}#">{{ _('Back to top') }}</a></p></div>
+         <div class="col-2 col-sm-1"><p class="float-end"><i class="bi bi-arrow-up"></i> <a href="{{ abs_url }}#">{{ _('Back to top') }}</a></p></div>
       </div>
+      {% if BOOTSTRAP_THEME_SWITCH == 'footer' %}
+      <div class="row">
+         <div class="col-12 text-center">
+            {% set THEME_SWITCH_BTN_STYLE = 'btn-outline-secondary' %}
+            {% include 'includes/theme_switch.html' %}
+         </div>
+      </div>
+      {% endif %}
    </div>
 </footer>

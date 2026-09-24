@@ -1,10 +1,11 @@
 {% if SIDEBAR_IMAGES %}
     {% from 'includes/sidebar/macros.jinja' import title %}
+    {% set SIDEBAR_ICONS = not DISABLE_SIDEBAR_TITLE_ICONS %}
 
     <!-- Sidebar/Images -->
     <li class="list-group-item">
         {% if SIDEBAR_IMAGES_HEADER %}
-            <h4>{{ title(SIDEBAR_IMAGES_HEADER, DISABLE_SIDEBAR_TITLE_ICONS, icon='external-link-square') }}</h4>
+            <h4>{{ title(SIDEBAR_IMAGES_HEADER, not SIDEBAR_ICONS, icon='box-arrow-up-right') }}</h4>
         {% endif %}
         <ul class="list-group" id="images">
             {% for i in SIDEBAR_IMAGES %}

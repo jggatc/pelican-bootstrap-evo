@@ -1,6 +1,6 @@
 # pelican-bootstrap-evo
 
-A theme for [Pelican](https://github.com/getpelican/pelican) static site. The theme is derived from [pelican-bootstrap3](https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3), extending its features.
+A theme for [Pelican](https://github.com/getpelican/pelican) static site. The theme is derived from [pelican-bootstrap3](https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3), extending its features. **As of this release the theme has been ported to [Bootstrap 5](https://getbootstrap.com/).**
 
 [Theme repository](https://github.com/jggatc/pelican-bootstrap-evo)
 
@@ -9,6 +9,12 @@ Pelican-bootstrap-evo is released under the MIT License, see LICENSE for further
 ## Information
 
 Since pelican-bootstrap-evo shares the features of pelican-bootstrap3, much of this document is derived from its readme. Changes will include the installation instructions and information of the extended features.
+
+See [CSS_HOOKS.md](CSS_HOOKS.md) for a reference of the class/id hooks you can target when customizing the theme with your own CSS.
+
+## Layout
+
+The default layout is a sticky navbar on top and a sidebar on the right of the content. The sidebar can be moved to the left with `SIDEBAR_ON_LEFT = True`, or hidden entirely with `HIDE_SIDEBAR = True`.
 
 ## Installation
 
@@ -63,10 +69,6 @@ Pages can be displayed in sidebar with `DISPLAY_PAGES_ON_SIDEBAR`. The title can
 
 When `baseurl` metadata key is set in an article or page, a `<base>` tag with the `baseurl` is inserted in `<head>`. If set, the base URL will be the root for all relative URL. An instance where this functionality is of use is with a JavaScript app that loads assets from a relative URL of the app URL, that can be defined as `:baseurl: app/`.
 
-### Footer
-
-The footer can be defined with `FOOTER_COPYRIGHT`, `FOOTER_TEXT`, and `FOOTER_CONTENT`.
-
 ## Usage
 
 This theme honors the following standard Pelican settings:
@@ -90,17 +92,58 @@ control the amount of tags shown with: `TAG_CLOUD_MAX_ITEMS`
 
 ## Extras
 
-### Bootswatch and other Bootstrap 3 themes
+### Bootswatch and other Bootstrap 5 themes
 
-Part of the versatility of this theme comes from the fact that I included all
-the lovely Bootstrap 3 themes from [Bootswatch](http://bootswatch.com/), built
-by [Thomas Park](https://github.com/thomaspark). You can tell Pelican what
-Bootswatch theme to use, by setting `BOOTSTRAP_THEME` to the desired theme, in
-lowercase (ie. 'readable' or 'cosmo' etc.). My own site is using _Simplex_. If
-you want to use any other Bootstrap 3 compatible theme, just put the minified
-CSS in the `static/css` directory and rename it using the following naming
-scheme: `bootstrap.{theme-name}.min.css`. Then update the `BOOTSTRAP_THEME`
-variable with the _theme-name_ used.
+Part of the versatility of this theme comes from the fact that it supports the
+[Bootstrap 5](https://getbootstrap.com/) themes from
+[Bootswatch](https://bootswatch.com/), built by [Thomas Park](https://github.com/thomaspark).
+You can tell Pelican what Bootswatch theme to use by setting `BOOTSTRAP_THEME`
+to the desired theme, in lowercase (ie. `'slate'` or `'journal'`).
+
+The theme CSS lives in one subdirectory per Bootswatch theme, so adding a new
+theme is as simple as dropping a directory in:
+
+```
+static/css/<theme-name>/bootstrap.min.css
+static/css/<theme-name>/bootstrap.min.css.map
+```
+
+Then set `BOOTSTRAP_THEME = '<theme-name>'`. Two themes are bundled out of the
+box: `slate` (dark) and `journal` (light). If `BOOTSTRAP_THEME` is not set, the
+plain Bootstrap 5 stylesheet at `static/css/bootstrap.min.css` is used.
+
+#### Dark/light theme switcher
+
+The theme implements the dark/light switcher used by the example config:
+
+* `BOOTSTRAP_THEME_DARK` — theme used for dark mode (default `slate`).
+* `BOOTSTRAP_THEME_LIGHT` — theme used for light mode (default `journal`).
+* `BOOTSTRAP_THEME_SWITCH` — where the switcher lives: `'navbar'` or
+  `'footer'`. If unset, no switcher is rendered and `BOOTSTRAP_THEME` is used
+  as-is.
+* `BOOTSTRAP_THEME_STYLES` — optional list of theme names shown in a dropdown
+  next to the dark/light buttons, letting the visitor pick any installed
+  Bootswatch theme directly.
+* `BOOTSTRAP_DARK_THEMES` — list of theme names that are dark by design. It
+  drives the `data-bs-theme` color-mode and the dark/light buttons. Defaults to
+  `['slate', 'cyborg', 'darkly', 'superhero']`; add any dark theme you install
+  here (light themes are everything not in this list).
+
+The choice is persisted in `localStorage` (`bootstrap-theme-evo`) and applied
+on load. The `data-bs-theme` color-mode attribute on `<html>` is set
+accordingly (`dark` for themes in `BOOTSTRAP_DARK_THEMES`, otherwise `light`).
+A saved theme is only restored if it is still offered by the switcher, so
+removing a theme from `BOOTSTRAP_THEME_STYLES` can't leave a returning
+visitor's page unstyled.
+
+#### Bootstrap Icons
+
+Icons in the navbar, sidebar headers, article info and theme switcher use
+[Bootstrap Icons](https://icons.getbootstrap.com/). The stylesheet and fonts
+are vendored under `static/icons/` (`bootstrap-icons.min.css` plus the
+`bootstrap-icons.woff`/`.woff2` fonts and the individual SVG sources), and the
+stylesheet is always loaded. `DISABLE_SIDEBAR_TITLE_ICONS = True` hides the
+icons in sidebar section titles.
 
 ### Article info
 
@@ -169,10 +212,10 @@ For a demo of the different Pygment styles, have a look [here](http://pygments.o
 
 ### Pagination
 
-Pelican-Bootstrap3 follows the standard Pagination settings of Pelican and uses
-the Bootstrap3 [Pagination
-component](http://getbootstrap.com/components/#pagination), but you can
-optionally use the Boostrap3 _Pager_ by setting `USE_PAGER` to `True`.
+Pelican-Bootstrap-evo follows the standard Pagination settings of Pelican and uses
+the Bootstrap 5 [Pagination
+component](https://getbootstrap.com/docs/5.3/components/pagination/), but you can
+optionally use the Bootstrap 5 _Pager_ by setting `USE_PAGER` to `True`.
 
 ### Bootstrap fluid layout
 
@@ -195,7 +238,9 @@ wish to enable it, set the `DISPLAY_CATEGORY_IN_BREADCRUMBS` flag to _True_.
 
 ### Navbar
 
-If you wish to use the inverse navbar from Bootstrap, set the flag `BOOTSTRAP_NAVBAR_INVERSE` to _True_.
+The navbar is a Bootstrap 5 sticky navbar (`navbar-expand-lg`) that collapses
+into a hamburger menu on small screens. If you wish to use the dark navbar,
+set the flag `BOOTSTRAP_NAVBAR_INVERSE` to _True_.
 
 ### Related Posts
 
@@ -277,7 +322,7 @@ SOCIAL = (('twitter', 'http://twitter.com/DaanDebie'),
           ('github', 'http://github.com/DandyDev'),
           ('stackoverflow', 'http://stackoverflow.com/users/872397/dandydev', 'stack-overflow')
 ```
-The first string in each item will be used for both the name as shown in the sidebar, and to determine the [FontAwesome](http://fontawesome.io/icons/)
+The first string in each item will be used for both the name as shown in the sidebar, and to determine the [Bootstrap Icons](https://icons.getbootstrap.com/)
 icon to show. You can provide an alternative icon string as the third string (as shown in the _stackoverflow_ item).
 * **Tags** will be shown if `DISPLAY_TAGS_ON_SIDEBAR` is set to _True_ and the [tag_cloud](https://github.com/getpelican/pelican-plugins/tree/master/tag_cloud) plugin is enabled. Normally, tags are shown as a list.
 	* Set `DISPLAY_TAGS_INLINE` to _True_, to display the tags inline (ie. as tagcloud)
@@ -388,15 +433,11 @@ For a detailed description of each setting, refer to [data attributes](https://g
 
 ### Tipue Search
 
-This theme has support for the
-[Tipue Search plugin](https://github.com/getpelican/pelican-plugins/tree/master/tipue_search).
-
-All you have to do, is:
-- enable the plugin, and the theme will add a search box on the right
-  side of the menu
-- Add `'search'` to the `DIRECT_TEMPLATES` in your `pelicanconf.py`. E.g. `DIRECT_TEMPLATES = ('index', 'categories', 'authors', 'archives', 'search').
-By default, the Tipue search page is configured at "/search.html", but you can override that with the `SEARCH_URL` 
-setting, which comes in handy if you have fancy rewrite rules in your Apache or Nginx configuration.
+Tipue Search is **not supported** in the Bootstrap 5 port. If you need search,
+you can build a static index yourself (e.g. with
+[searchtemplates](https://github.com/pelican-plugins/searchtemplates) or a
+client-side index) and wire it into `CUSTOM_CSS`/`CUSTOM_JS` and a page of your
+own.
 
 ### Flattr
 

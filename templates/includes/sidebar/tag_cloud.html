@@ -4,6 +4,7 @@
 
 {% if 'tag_cloud' in PLUGINS and DISPLAY_TAGS_ON_SIDEBAR %}
   {% from 'includes/sidebar/macros.jinja' import title %}
+  {% set SIDEBAR_ICONS = not DISABLE_SIDEBAR_TITLE_ICONS %}
   {% if DISPLAY_TAGS_INLINE %}
     {% set tags = tag_cloud | sort(attribute='0') %}
   {% else %}
@@ -12,7 +13,7 @@
 
 <!-- Sidebar/Tag Cloud -->
 <li class="list-group-item">
-  <a href="{{ SITEURL }}/{{ TAGS_URL }}"><h4>{{ title(_('Tags'), DISABLE_SIDEBAR_TITLE_ICONS, icon='tags') }}</h4></a>
+  <a href="{{ SITEURL }}/{{ TAGS_URL }}"><h4>{{ title(_('Tags'), not SIDEBAR_ICONS, icon='tags') }}</h4></a>
   <ul class="list-group {% if DISPLAY_TAGS_INLINE %}list-inline tagcloud{% endif %}" id="tags">
     {% for tag in tags %}
     <li class="list-group-item tag-{{ tag.1 }}">

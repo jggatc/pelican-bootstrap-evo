@@ -5,8 +5,8 @@
 {% block breadcrumbs %}
     {% if DISPLAY_BREADCRUMBS %}
     <ol class="breadcrumb">
-        <li><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="fa fa-home fa-lg"></i></a></li>
-        <li class="active">Tags</li>
+        <li class="breadcrumb-item"><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="bi bi-house"></i></a></li>
+        <li class="breadcrumb-item active">Tags</li>
     </ol>
     {% endif %}
 {% endblock %}
@@ -14,16 +14,16 @@
 {% block content %}
     <section id="tags">
         <h1>{{ _('Tags for') }} {{ SITENAME }}</h1>
-        <div class="panel-group" id="accordion">
+        <div class="accordion" id="accordion">
             {%- for tag, articles in tags|sort %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{tag.slug}}">{{ tag }} <span class="badge pull-right">{{ articles|count }}</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-{{tag.slug}}" class="panel-collapse collapse">
-                    <div class="panel-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-{{ tag.slug }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ tag.slug }}" aria-expanded="false" aria-controls="collapse-{{ tag.slug }}">
+                        {{ tag }} <span class="badge text-bg-secondary rounded-pill ms-auto">{{ articles|count }}</span>
+                    </button>
+                </h2>
+                <div id="collapse-{{ tag.slug }}" class="accordion-collapse collapse" data-bs-parent="#accordion" aria-labelledby="heading-{{ tag.slug }}">
+                    <div class="accordion-body">
                         {% for article in articles %}
                         <p><span class="categories-timestamp"><time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></span> <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></p>
                         {% endfor %}

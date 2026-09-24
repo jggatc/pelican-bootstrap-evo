@@ -3,8 +3,8 @@
 {% block breadcrumbs %}
     {% if DISPLAY_BREADCRUMBS %}
     <ol class="breadcrumb">
-        <li><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="fa fa-home fa-lg"></i></a></li>
-        <li class="active">{{ _('Archives') }}</li>
+        <li class="breadcrumb-item"><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="bi bi-house"></i></a></li>
+        <li class="breadcrumb-item active">{{ _('Archives') }}</li>
     </ol>
     {% endif %}
 {% endblock %}

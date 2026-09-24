@@ -4,8 +4,8 @@
 {% block breadcrumbs %}
     {% if DISPLAY_BREADCRUMBS %}
     <ol class="breadcrumb">
-        <li><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="fa fa-home fa-lg"></i></a></li>
-        <li class="active">{{ _('Categories') }}</li>
+        <li class="breadcrumb-item"><a href="{{ SITEURL }}" title="{{ SITENAME }}"><i class="bi bi-house"></i></a></li>
+        <li class="breadcrumb-item active">{{ _('Categories') }}</li>
     </ol>
     {% endif %}
 {% endblock %}
@@ -13,16 +13,16 @@
 {% block content %}
     <section id="categories">
       <h1>{{ _('All Categories for')  }} {{ SITENAME }}</h1>
-        <div class="panel-group" id="accordion">
+        <div class="accordion" id="accordion">
             {% for category, articles in categories %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{category.slug}}">{{ category }} <span class="badge pull-right">{{ articles|count }}</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-{{category.slug}}" class="panel-collapse collapse">
-                    <div class="panel-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-{{ category.slug }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ category.slug }}" aria-expanded="false" aria-controls="collapse-{{ category.slug }}">
+                        {{ category }} <span class="badge text-bg-secondary rounded-pill ms-auto">{{ articles|count }}</span>
+                    </button>
+                </h2>
+                <div id="collapse-{{ category.slug }}" class="accordion-collapse collapse" data-bs-parent="#accordion" aria-labelledby="heading-{{ category.slug }}">
+                    <div class="accordion-body">
                         {% for article in articles %}
                         <p><span class="categories-timestamp"><time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></span> <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></p>
                         {% endfor %}
